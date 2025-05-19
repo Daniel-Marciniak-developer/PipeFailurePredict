@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  flow-simulation:
+    build: .
+    volumes:
+      - ./FlowAlgorithm/data:/app/FlowAlgorithm/data
+      - ./FlowAlgorithm/output:/app/FlowAlgorithm/output
+    command: python -m FlowAlgorithm.main
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  regression-app:
+    build: .
+    volumes:
+      - ./Predictions/data:/app/Predictions/data
+      - ./Predictions/RegressionModel/models:/app/Predictions/RegressionModel/models
+    command: streamlit run Predictions/RegressionModel/app.py
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  transformer-app:
+    build: .
+    volumes:
+      - ./Predictions/data:/app/Predictions/data
+      - ./Predictions/TransformerModel/models:/app/Predictions/TransformerModel/models
+    command: streamlit run Predictions/TransformerModel/visualization_app.py
+    ports:
+      - "8502:8501"
+    env_file:
+      - .env
+    restart: unless-stopped
