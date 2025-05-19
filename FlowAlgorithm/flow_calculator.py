@@ -7,7 +7,7 @@ class FlowCalculator:
     """
 
     WATER_DENSITY = 1000  # kg/m^3
-    GRAVITY = 9.81  # m/s^2
+    GRAVITY = 9.81  # m/s^2 Not used yet
 
     @staticmethod
     def get_pipe_roughness(material: str) -> float:
